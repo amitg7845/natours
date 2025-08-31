@@ -1,6 +1,5 @@
 // const fs = require('fs');
 const Tour = require('./../models/tourModels');
-const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
@@ -53,79 +52,80 @@ exports.checkID = (req, res, next, val) => {
 //   next();
 // };
 
-exports.getAllTours = catchAsync(async (req, res, next) => {
-  // BUILD QUERY
-  // 1A) filtering
-  // const queryObj = { ...req.query };
-  // const excludedFields = ['page', 'sort', 'limit', 'fields'];
-  // excludedFields.forEach((el) => delete queryObj[el]);
+exports.getAllTours = factory.getAll(Tour);
+// exports.getAllTours = catchAsync(async (req, res, next) => {
+// BUILD QUERY
+// 1A) filtering
+// const queryObj = { ...req.query };
+// const excludedFields = ['page', 'sort', 'limit', 'fields'];
+// excludedFields.forEach((el) => delete queryObj[el]);
 
-  // console.log(req.query, queryObj);
-  // // 1A) Advanced filtering
-  // let queryStr = JSON.stringify(queryObj);
-  // queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-  // console.log(JSON.parse(queryStr));
+// console.log(req.query, queryObj);
+// // 1A) Advanced filtering
+// let queryStr = JSON.stringify(queryObj);
+// queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+// console.log(JSON.parse(queryStr));
 
-  // let query = Tour.find(JSON.parse(queryStr)); //Return entire array
+// let query = Tour.find(JSON.parse(queryStr)); //Return entire array
 
-  //2) Sorting
-  // if (req.query.sort) {
-  //   const sortBy = req.query.sort.split(',').join(' ');
-  //   query = query.sort(sortBy);
-  //   //127.0.0.1:5000/api/v1/tours?sort=price,ratingAverage    OR -price
-  // } else {
-  //   query = query.sort('-createdAt');
-  // }
-  // console.log(req.query.sort);
+//2) Sorting
+// if (req.query.sort) {
+//   const sortBy = req.query.sort.split(',').join(' ');
+//   query = query.sort(sortBy);
+//   //127.0.0.1:5000/api/v1/tours?sort=price,ratingAverage    OR -price
+// } else {
+//   query = query.sort('-createdAt');
+// }
+// console.log(req.query.sort);
 
-  // 3) Field limiting
-  // if (req.query.fields) {
-  //   const fields = req.query.fields.split(',').join(' ');
-  //   //127.0.0.1:5000/api/v1/tours?fields=-price,-name,-description  OR ?fields=price,name,description
-  //   query = query.select(fields);
-  // } else {
-  //   query = query.select('-__v');
-  //   //Search except by __V
-  // }
+// 3) Field limiting
+// if (req.query.fields) {
+//   const fields = req.query.fields.split(',').join(' ');
+//   //127.0.0.1:5000/api/v1/tours?fields=-price,-name,-description  OR ?fields=price,name,description
+//   query = query.select(fields);
+// } else {
+//   query = query.select('-__v');
+//   //Search except by __V
+// }
 
-  // Pagination
-  // const page = req.query.page * 1 || 1;
-  // const limit = req.query.limit * 1 || 100;
-  // const skip = (page - 1) * limit;
-  // //127.0.0.1:5000/api/v1/tours?page=2&limit=3
-  // query = query.skip(skip).limit(limit);
+// Pagination
+// const page = req.query.page * 1 || 1;
+// const limit = req.query.limit * 1 || 100;
+// const skip = (page - 1) * limit;
+// //127.0.0.1:5000/api/v1/tours?page=2&limit=3
+// query = query.skip(skip).limit(limit);
 
-  // if (req.query.page) {
-  //   const numTour = await Tour.countDocuments(); //Counts document in api
-  //   if (skip >= numTour) throw new Error("'This page does not exits!!!"); //127.0.0.1:5000/api/v1/tours?page=5&limit=3
-  // }
+// if (req.query.page) {
+//   const numTour = await Tour.countDocuments(); //Counts document in api
+//   if (skip >= numTour) throw new Error("'This page does not exits!!!"); //127.0.0.1:5000/api/v1/tours?page=5&limit=3
+// }
 
-  // EXECUTE QUERY
+// EXECUTE QUERY
 
-  const features = new APIFeatures(
-    Tour.find().populate({
-      path: 'reviews',
-      select: 'review rating user',
-    }),
-    req.query
-  )
-    .filter()
-    .sort()
-    .limitFields()
-    .pagination();
+//   const features = new APIFeatures(
+//     Tour.find().populate({
+//       path: 'reviews',
+//       select: 'review rating user',
+//     }),
+//     req.query
+//   )
+//     .filter()
+//     .sort()
+//     .limitFields()
+//     .pagination();
 
-  const tours = await features.query;
-  // console.log('Tours responses ', tours);
+//   const tours = await features.query;
+//   // console.log('Tours responses ', tours);
 
-  // SEND QUERY
-  res.status(200).json({
-    status: 'success',
-    results: tours.length,
-    data: {
-      tours,
-    },
-  });
-});
+//   // SEND QUERY
+//   res.status(200).json({
+//     status: 'success',
+//     results: tours.length,
+//     data: {
+//       tours,
+//     },
+//   });
+// });
 
 // exports.getTour = (req, res) => {
 // const id = req.params.id * 1;

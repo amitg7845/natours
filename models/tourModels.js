@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 const validator = require('validator');
-const User = require('./userModel');
+const User = require('./userModels');
 
 //   Creating schema  Ref. document for making Schema.
 const tourSchema = new mongoose.Schema(
@@ -120,6 +120,10 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+// Improving Read Performance with Indexes
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
 // Virtual properties/Populates
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
@@ -178,6 +182,7 @@ tourSchema.post(/^find/, function (docs, next) {
 // });
 
 // Creating model and model name should be in Cap. latter.
+
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
