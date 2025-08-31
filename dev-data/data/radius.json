@@ -1,0 +1,98 @@
+{
+  "status": "success",
+  "result": 1,
+  "data": {
+    "data": [
+      {
+        "startLocation": {
+          "type": "Point",
+          "coordinates": [-118.803461, 34.006072],
+          "address": "29130 Cliffside Dr, Malibu, CA 90265, USA",
+          "description": "California, USA"
+        },
+        "_id": "5c88fa8cf4afda39709c2966",
+        "name": "The Sports Lover",
+        "duration": 14,
+        "maxGroupSize": 8,
+        "difficulty": "difficult",
+        "ratingsAverage": 3.9,
+        "ratingsQuantity": 7,
+        "price": 2997,
+        "summary": "Surfing, skating, parajumping, rock climbing and more, all in one tour",
+        "description": "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nVoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur!",
+        "imageCover": "tour-6-cover.jpg",
+        "images": ["tour-6-1.jpg", "tour-6-2.jpg", "tour-6-3.jpg"],
+        "startDates": [
+          "2021-07-19T09:00:00.000Z",
+          "2021-09-06T09:00:00.000Z",
+          "2022-03-18T10:00:00.000Z"
+        ],
+        "secretTour": false,
+        "locations": [
+          {
+            "type": "Point",
+            "coordinates": [-118.809361, 34.003098],
+            "description": "Point Dume Beach",
+            "day": 1,
+            "_id": "5c88fa8cf4afda39709c296b"
+          },
+          {
+            "type": "Point",
+            "coordinates": [-118.47549, 33.987367],
+            "description": "Venice Skate Park",
+            "day": 4,
+            "_id": "5c88fa8cf4afda39709c296a"
+          },
+          {
+            "type": "Point",
+            "coordinates": [-116.830104, 33.022843],
+            "description": "San Diego Skydive",
+            "day": 6,
+            "_id": "5c88fa8cf4afda39709c2969"
+          },
+          {
+            "type": "Point",
+            "coordinates": [-118.4547, 35.710359],
+            "description": "Kern River Rafting",
+            "day": 7,
+            "_id": "5c88fa8cf4afda39709c2968"
+          },
+          {
+            "type": "Point",
+            "coordinates": [-119.600492, 37.742371],
+            "description": "Yosemite National Park",
+            "day": 10,
+            "_id": "5c88fa8cf4afda39709c2967"
+          }
+        ],
+        "guides": [
+          {
+            "_id": "5c8a21f22f8fb814b56fa18a",
+            "name": "Aarav Lynn",
+            "email": "aarav@example.com",
+            "photo": "user-5c8a21f22f8fb814b56fa18a-1686568030219.jpeg",
+            "role": "lead-guide"
+          },
+          {
+            "_id": "5c8a1f292f8fb814b56fa184",
+            "name": "Leo Gillespie",
+            "email": "leo@example.com",
+            "photo": "user-5c8a1f292f8fb814b56fa184-1686561916889.jpeg",
+            "role": "guide"
+          },
+          {
+            "_id": "5c8a1f4e2f8fb814b56fa185",
+            "name": "Jennifer Hardy",
+            "email": "jennifer@example.com",
+            "photo": "user-6.jpg",
+            "role": "guide"
+          }
+        ],
+        "slug": "the-sports-lover",
+        "__v": 0,
+        "durationWeeks": 2,
+        "id": "5c88fa8cf4afda39709c2966"
+      }
+    ]
+  }
+}

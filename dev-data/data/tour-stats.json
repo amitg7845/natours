@@ -1,0 +1,34 @@
+{
+  "status": "success",
+  "data": {
+    "stats": [
+      {
+        "_id": "DIFFICULT",
+        "totalTours": 1,
+        "totalRatings": 6,
+        "avgRating": 4.5,
+        "avgPrice": 997,
+        "minPrice": 997,
+        "maxPrice": 997
+      },
+      {
+        "_id": "EASY",
+        "totalTours": 3,
+        "totalRatings": 21,
+        "avgRating": 4.76666666666667,
+        "avgPrice": 1030.33333333333,
+        "minPrice": 397,
+        "maxPrice": 1497
+      },
+      {
+        "_id": "MEDIUM",
+        "totalTours": 3,
+        "totalRatings": 19,
+        "avgRating": 4.76666666666667,
+        "avgPrice": 1663.66666666667,
+        "minPrice": 497,
+        "maxPrice": 2997
+      }
+    ]
+  }
+}
