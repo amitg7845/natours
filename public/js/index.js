@@ -1,0 +1,47 @@
+import '@babel/polyfill';
+import { login, logout } from './login';
+import { updateSettings } from './updateSettings';
+
+// DOM ELEMENTS
+const loginForm = document.querySelector('.login--form');
+const logOutBtn = document.querySelector('.nav__el--logout');
+const userDataform = document.querySelector('.form-user-data');
+const formUserPassword = document.querySelector('.form-user-password');
+
+// DELEGATION
+if (loginForm) {
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    login(email, password);
+  });
+}
+
+if (logOutBtn) logOutBtn.addEventListener('click', logout);
+
+if (userDataform) {
+  userDataform.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    console.log(name, email, 'userDataform');
+
+    updateSettings({ name, email }, 'data');
+  });
+}
+
+if (formUserPassword) {
+  formUserPassword.addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.querySelector('.btn--save-password').textContent = 'Updating ...';
+    const passwordCurrent = document.getElementById('password-current').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+    updateSettings({ passwordCurrent, password, passwordConfirm }, 'password');
+    document.querySelector('.btn--save-password').textContent = 'Save password';
+    document.getElementById('password-current').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password-confirm').value = '';
+  });
+}

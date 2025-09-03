@@ -1,3 +1,9 @@
+
 {
-  "singleQuote": true
+  "plugins": ["@prettier/plugin-pug"],
+  "tabWidth": 2,
+  "pugBracketSpacing": true,
+  "pugAttributeSeparator": "none",
+  "singleQuote": true,
+  "printWidth": 80
 }

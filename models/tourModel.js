@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 const validator = require('validator');
-const User = require('./userModels');
+const User = require('./userModel');
 
 //   Creating schema  Ref. document for making Schema.
 const tourSchema = new mongoose.Schema(
@@ -38,6 +38,7 @@ const tourSchema = new mongoose.Schema(
       required: [true, 'A tour must below 5.0'],
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
+      set: (val) => Math.round(val * 10) / 10,
     },
     ratingQuantity: {
       type: Number,
@@ -117,12 +118,13 @@ const tourSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
 // Improving Read Performance with Indexes
 tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
+tourSchema.index({ startLocation: '2dsphere' }); //For geo
 
 // Virtual properties/Populates
 tourSchema.virtual('durationWeeks').get(function () {

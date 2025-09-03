@@ -35,8 +35,17 @@ router
   .get(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide', 'guide'),
-    tourController.getMonthlyPlan
+    tourController.getMonthlyPlan,
   );
+
+// Geospatial Queries: Finding tours within radius
+router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(tourController.getToursWithin);
+//  /tours-within?distance=223&center=-40,45&unit=mi
+//  /tours-within/223/center/-40,45/unit/mi
+
+router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
 
 router
   .route('/')
@@ -45,7 +54,7 @@ router
   .post(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
-    tourController.createTour
+    tourController.createTour,
   );
 
 router
@@ -54,12 +63,12 @@ router
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
-    tourController.updateTour
+    tourController.updateTour,
   )
   .delete(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
-    tourController.deleteTour
+    tourController.deleteTour,
   );
 
 module.exports = router;
