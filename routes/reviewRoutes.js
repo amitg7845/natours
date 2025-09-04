@@ -16,7 +16,7 @@ router
   .post(
     authController.restrictTo('user'),
     reviewController.setTourUserIds,
-    reviewController.createReview
+    reviewController.createReview,
   );
 
 router
@@ -24,11 +24,11 @@ router
   .get(reviewController.getReview)
   .patch(
     authController.restrictTo('user', 'admin'),
-    reviewController.updateReview
+    reviewController.updateReview,
   )
   .delete(
     authController.restrictTo('user', 'admin'),
-    reviewController.deleteReview
+    reviewController.deleteReview,
   );
 
 module.exports = router;

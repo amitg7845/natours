@@ -12647,7 +12647,7 @@ var login = exports.login = /*#__PURE__*/function () {
         case 2:
           _context.p = 2;
           _t = _context.v;
-          console.log('error');
+          // console.log('error');
           (0, _alerts.showAlert)('error', _t.response.data.message);
         case 3:
           return _context.a(2);
@@ -12898,13 +12898,12 @@ if (logOutBtn) logOutBtn.addEventListener('click', _login.logout);
 if (userDataform) {
   userDataform.addEventListener('submit', function (e) {
     e.preventDefault();
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
-    console.log(name, email, 'userDataform');
-    (0, _updateSettings.updateSettings)({
-      name: name,
-      email: email
-    }, 'data');
+    var form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
+    (0, _updateSettings.updateSettings)(form, 'data');
   });
 }
 if (formUserPassword) {

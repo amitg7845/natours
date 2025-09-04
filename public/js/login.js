@@ -21,7 +21,7 @@ export const login = async (email, password) => {
 
     // You can redirect or store token here if needed
   } catch (error) {
-    console.log('error');
+    // console.log('error');
     showAlert('error', error.response.data.message);
   }
 };

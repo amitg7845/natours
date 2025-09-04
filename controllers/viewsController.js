@@ -23,7 +23,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
     path: 'reviews',
     fields: 'review rating user',
   });
-  console.log('tour details', tour);
+  // console.log('tour details', tour);
   if (!tour) {
     return next(new AppError('There is no tour with that name.', 404));
   }
@@ -43,8 +43,6 @@ exports.getLoginForm = (req, res) => {
 };
 
 exports.getAccount = (req, res) => {
-  console.log('Inside getAccount');
-
   res.status(200).render('account', {
     title: 'Your account',
   });
