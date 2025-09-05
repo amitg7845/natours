@@ -8,6 +8,7 @@ const express = require('express');
 const morgan = require('morgan');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -69,12 +70,14 @@ app.use(
   }),
 );
 
+app.use(compression());
+
 // Middlewares  AND Test middleware
 //Custom midleware and always defines midleware bet req. and res. Usually it shuould defines at top.
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   // console.log('req.headers', req.headers);
-  console.log('res.locals:', res.locals, req.cookies);
+  // console.log('res.locals:', res.locals, req.cookies);
   next();
 });
 

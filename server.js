@@ -15,7 +15,7 @@ process.on('uncaughtException', (err) => {
 // console.log(process.env);
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
+  process.env.DATABASE_PASSWORD,
 );
 
 mongoose
@@ -27,7 +27,7 @@ mongoose
     useFindAndModify: false,
   })
   .then((con) => {
-    console.log(con.connect);
+    // console.log(con.connect);
     console.log('DB connection successful (server) !!!');
   });
 
