@@ -11,7 +11,7 @@ export const login = async (email, password) => {
         password,
       },
     });
-
+    // http://127.0.0.1:8000/api/v1/users/login  (during testing use this url)
     if (res.data.status == 'success') {
       showAlert('success', 'Logged in successfully');
       window.setTimeout(() => {
