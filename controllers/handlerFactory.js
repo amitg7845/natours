@@ -34,9 +34,11 @@ exports.updateOne = (Model) =>
       },
     });
   });
-
+// https://mongoosejs.com/docs/api/model.html#Model.findById()   {All model methods}
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    // Model.create() efficiently creates and saves documents, triggering validation, middleware (pre/post 'save'), and indexes:
+
     const doc = await Model.create(req.body);
     // console.log('newTour', newTour);
 
@@ -50,6 +52,8 @@ exports.createOne = (Model) =>
 
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
+    console.log('req.params.id', req.params.id);
+
     let query = Model.findById(req.params.id);
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
@@ -75,15 +79,17 @@ exports.getAll = (Model, popOptions) =>
     if (popOptions) {
       query = query.populate(popOptions);
     }
-
+    // console.log('req.query', req.query);
     const features = new APIFeatures(query, req.query)
       .filter()
       .sort()
-      .limitFields()
-      .pagination();
+      .limitFields();
+    // .pagination();
 
     // const doc = await features.query.explain();
     const doc = await features.query;
+    // if (!doc) doc = [];
+    // console.log('DOC', doc);
 
     res.status(200).json({
       status: 'success',

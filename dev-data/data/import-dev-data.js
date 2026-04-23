@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const fs = require('fs');
 // const app = require('./app');
-const Tour = require('./../../models/tourModels');
-const User = require('./../../models/userModels');
-const Review = require('./../../models/reviewModels');
+const Tour = require('./../../models/tourModel');
+const User = require('./../../models/userModel');
+const Review = require('./../../models/reviewModel');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' }); //it will read variable from config.env and save into Node.js env. variable file.
 
@@ -12,7 +12,7 @@ dotenv.config({ path: './config.env' }); //it will read variable from config.env
 // console.log(process.env);
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
+  process.env.DATABASE_PASSWORD,
 );
 
 mongoose
@@ -34,9 +34,10 @@ mongoose
 //   READ JSON FILE  [IMPORTING DEVELOPMENT DATA]
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 const reviews = JSON.parse(
-  fs.readFileSync(`${__dirname}/reviews.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/reviews.json`, 'utf-8'),
 );
 const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, 'utf-8'));
+// console.log('USERS', users);
 
 // IMPORT DATA INTO DB
 const importData = async () => {

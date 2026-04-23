@@ -43,9 +43,12 @@ const createSendToken = (user, statusCode, res) => {
 // Signing up Users
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
-  const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(url);
-  await new Email(newUser, url).sendWelcom();
+  try {
+    const url = `${req.protocol}://${req.get('host')}/me`;
+    await new Email(newUser, url).sendWelcome();
+  } catch (emailErr) {
+    console.log('Email failed (non-critical):', emailErr.message);
+  }
   createSendToken(newUser, 201, res);
 });
 
@@ -63,6 +66,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 // Login Users
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log('email', 'password', email, password);
 
   // 1) Check if email and password exist
   if (!email || !password) {
@@ -70,7 +74,12 @@ exports.login = async (req, res, next) => {
   }
 
   // 2) Check if user exists and password is correct
+  // const user = await User.findOne({ email: 'admin@natours.io' });
+  console.log('🔍 Searching for email:', email);
   const user = await User.findOne({ email }).select('+password');
+  // const user = await User.findOne({ email: email }).select('+password');
+
+  console.log('CHECKING EMAIL EXITS OR NOT :-', user.email);
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
@@ -99,7 +108,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-    // console.log(token);
+    console.log('TOKEN', req.headers);
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
@@ -112,12 +121,15 @@ exports.protect = catchAsync(async (req, res, next) => {
   // Protecting Tour Routes - 2
   // 2) Varification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  // console.log('DECODED ID', decoded.id);
 
   // 3) Check if user still exists  [It is not working]
   const currentUser = await User.findById(decoded.id);
+  console.log('currentUser', currentUser);
+
   if (!currentUser) {
     return next(
-      new AppError('The user belongijjng to this token no longer exist.', 401),
+      new AppError('The user belonging to this token no longer exist.', 401),
     );
   }
 

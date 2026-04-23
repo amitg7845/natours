@@ -30,6 +30,7 @@ const sendErrorDev = (err, req, res) => {
       status: err.status,
       error: err,
       message: err.message,
+      // err.stack defineds where error occured
       stack: err.stack,
     });
   }

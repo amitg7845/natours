@@ -1,12 +1,15 @@
+const Tour = require('../models/tourModel');
+
 class APIFeatures {
   constructor(query, queryString) {
     // console.log('query ', query, 'queryString', queryString);
     this.query = query;
-    this.queryString = queryString;
+    this.queryString = queryString || {};
   }
   // 127.0.0.1:5000/api/v1/tours?difficulty=easy&duration=5&price[lt]=2000
   filter() {
     const queryObj = { ...this.queryString };
+    // console.log(queryObj);
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
 
@@ -26,7 +29,7 @@ class APIFeatures {
     if (this.queryString.sort) {
       console.log(this.queryString.sort);
 
-      const sortBy = this.queryString.sort.split('').join(' ');
+      const sortBy = this.queryString.sort.split(',').join(' ');
       this.query = this.query.sort(sortBy);
     } else {
       this.query = this.query.sort('-createdAt');
@@ -38,7 +41,10 @@ class APIFeatures {
   limitFields() {
     if (this.queryString.fields) {
       const fields = this.queryString.fields.split(',').join(' '); //127.0.0.1:5000/api/v1/tours?fields=-price,-name,-description  OR ?fields=price,name,description
+      console.log(fields);
+
       this.query = this.query.select(fields);
+      // console.log('this.query', this.query);
     } else {
       this.query = this.query.select('-__v'); //Search except by __V
     }
@@ -46,12 +52,16 @@ class APIFeatures {
 
     return this;
   }
-  pagination() {
+  async pagination() {
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 100;
     const skip = (page - 1) * limit; //127.0.0.1:5000/api/v1/tours?page=2&limit=3
-    this.query = this.query.skip(skip).limit(limit);
-    // console.log(this);
+    // this.query = this.query.skip(skip).limit(limit);
+
+    // if (this.queryString.page) {
+    const numTours = await Tour.countDocuments();
+    if (skip >= numTours) throw new Error('This page does not exits');
+    // }
 
     return this;
   }

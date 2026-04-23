@@ -27,18 +27,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a password'],
     minlength: 8,
-    select: false,
+    select: false, //it will not display password in postman while login
   },
 
   passwordConfirm: {
     type: String,
-    required: [true, 'Please provide your confirm password'],
+    // required: [true, 'Please provide your confirm password'],
     validate: {
       // THIS ONLY WORKS ON CREATE AND SAVE!!!
       validator: function (elm) {
         return elm === this.password; //confPass == password
       },
-      message: 'Password are not the same!',
+      message: 'Password are not the  same!',
     },
   },
   passwordChangedAt: Date,

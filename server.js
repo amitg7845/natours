@@ -11,7 +11,7 @@ process.on('uncaughtException', (err) => {
 });
 
 // Environment variable
-// console.log(app.get('env'));
+console.log("app.get('env'):=", app.get('env'));
 // console.log(process.env);
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -23,7 +23,7 @@ mongoose
     // To get rid from dependencies warning.
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true,
+    // useUnifiedTopology: true,
     useFindAndModify: false,
   })
   .then((con) => {
@@ -58,5 +58,6 @@ process.on('unhandledRejection', (err) => {
 
   server.close(() => {
     process.exit(1);
+    console.log('CLOSED SERVER');
   });
 });

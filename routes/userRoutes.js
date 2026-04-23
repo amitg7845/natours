@@ -30,6 +30,10 @@ router
   .get(userController.getAllUsers)
   .post(userController.createUser);
 
+// Express.js Router supports chaining HTTP methods via router.route(path).method(handler) for clean, multi-method routes.
+// router.get(path, handler) - Handles GET requests for retrieving data.
+// router.post(path, handler) - Handles POST requests for creating resources.
+// router.put(path, handler) - Handles PUT requests for updating/replacing entire resources.
 router
   .route('/:id/')
   .get(userController.getUser)

@@ -1,3 +1,4 @@
+// ALL EXPRESS CONFIGURATIONS
 const path = require('path');
 const mongoSanitize = require('express-mongo-sanitize');
 const xssClean = require('xss-clean');
@@ -27,19 +28,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(`${__dirname}/public`)); //Serving(Accessing) static file. eg. overview.html, imges. http://127.0.0.1:5000/img/pin.png ,http://127.0.0.1:5000/overview.html
 app.use(express.static(path.join(__dirname, 'public'))); //For axios
 // console.log(process.env.NODE_ENV);  1) GLOBAL MIDDLEWARES
-// Set security HTTP headers
-app.use(helmet());
-// Development logging
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev')); //Ref. 3rd party middleware at morgan github => index.js
-}
-// Rate requests from same API
-const limiter = rateLimit({
-  max: 50,
-  windowMs: 1 * 60 * 100,
-  message: 'Too many requests from this IP, please try again in an hour!',
-});
-app.use('/api', limiter);
 
 // Body parser, reading data from body into req. body.
 app.use(
@@ -49,6 +37,21 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser()); //It parses data from cookie
+
+// Set security HTTP headers
+app.use(helmet());
+// Development logging
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev')); //Ref. 3rd party middleware at morgan github => index.js
+}
+
+// Rate requests from same API [// Rate limiter (AFTER body parsers)]
+const limiter = rateLimit({
+  max: 50,
+  windowMs: 1 * 60 * 100,
+  message: 'Too many requests from this IP, please try again in an hour!',
+});
+app.use('/api', limiter);
 
 // Data sanitization against NOSQL query injection
 app.use(mongoSanitize());
@@ -72,17 +75,18 @@ app.use(
 
 app.use(compression());
 
-// Middlewares  AND Test middleware
+// Middlewares AND Test middleware
 //Custom midleware and always defines midleware bet req. and res. Usually it shuould defines at top.
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  // console.log('req.headers', req.headers);
-  // console.log('res.locals:', res.locals, req.cookies);
+  console.log('req.headers.authorization', req.headers.authorization);
+  console.log('req.headers', req.headers);
+  console.log('res.locals:', res.locals, req.cookies);
   next();
 });
 
 // app.post('/', (req, res) => {
-//   res.send('You can post to this endpoints');
+//   res.status(200).send('You can post to this endpoints');
 // });
 
 // app.get('/', (req, res) => {
@@ -118,7 +122,7 @@ app.use('/api/v1/reviews', reviewRouter);
 //   res.status(204).send(); // No Content
 // });
 
-// HANDLING UNHANDLED ROUTES
+// HANDLING UNHANDLED ROUTES {SO THAT IT WROTE AT END}
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find on ${req.originalUrl} this server`, 404));
 });

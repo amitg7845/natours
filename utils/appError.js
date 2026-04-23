@@ -4,6 +4,7 @@ class AppError extends Error {
     super(message); //To call parent class
     this.statusCode = statusCode;
     this.status = `${statusCode}`.startsWith(4) ? 'fail' : 'error';
+    // console.log('message', message, 'statusCode', statusCode);
     this.isOperational = true;
     Error.captureStackTrace(this, this.constructor);
   }
