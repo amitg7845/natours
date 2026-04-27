@@ -65,7 +65,7 @@ const deleteData = async () => {
   process.exit();
 };
 
-console.log(process.argv);
+console.log('process.argv', process.argv);
 
 if (process.argv[2] === '--import') {
   importData();

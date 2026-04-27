@@ -144,6 +144,7 @@ tourSchema.pre('save', function (next) {
 });
 
 tourSchema.pre('save', async function (next) {
+  console.log('THIS GUIDES', this.guides);
   const guidesPromises = this.guides.map(async (id) => await User.findById(id));
   this.guides = await Promise.all(guidesPromises);
   next();

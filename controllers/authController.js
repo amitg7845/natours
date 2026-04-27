@@ -22,7 +22,7 @@ const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 100,
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 1000,
     ),
     httpOnly: true,
   };
@@ -113,6 +113,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.cookies.jwt;
   }
   if (!token) {
+    console.log('NOT TOKEN');
     return next(
       new AppError('Your are not logged in! Please log in to get access.', 401),
     );
@@ -121,7 +122,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   // Protecting Tour Routes - 2
   // 2) Varification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  // console.log('DECODED ID', decoded.id);
+  console.log('DECODED ID', decoded.id);
 
   // 3) Check if user still exists  [It is not working]
   const currentUser = await User.findById(decoded.id);
@@ -202,7 +203,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // 3) Send it to user's email
 
-  // const message = `Forgot your password? Submit a PATCH request with your new password and password Confirm to ${resetURL}.\nIf yu didn't forget your password, please ignore this email!!!`;
+  // const message = `Forgot your password? Submit a PATCH request with your new password and password Confirm to ${resetURL}.\nIf you didn't forget your password, please ignore this email!!!`;
   try {
     const resetURL = `${req.protocol}://${req.get(
       'host',
@@ -256,7 +257,7 @@ exports.resetPassword = async (req, res, next) => {
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   await user.save();
-  // 3) Update changedPasswordAt propery for the user
+  // 3) Update changedPasswordAt property for the user
   // 4) Log the user in, send JWT
   createSendToken(user, 200, res);
 };

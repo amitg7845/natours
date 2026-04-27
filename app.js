@@ -26,7 +26,7 @@ app.set('views', path.join(__dirname, 'views'));
 //Middleware
 // Serving static files
 app.use(express.static(`${__dirname}/public`)); //Serving(Accessing) static file. eg. overview.html, imges. http://127.0.0.1:5000/img/pin.png ,http://127.0.0.1:5000/overview.html
-app.use(express.static(path.join(__dirname, 'public'))); //For axios
+app.use(express.static(path.join(__dirname, 'public'))); //F or axios
 // console.log(process.env.NODE_ENV);  1) GLOBAL MIDDLEWARES
 
 // Body parser, reading data from body into req. body.
@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === 'development') {
 // Rate requests from same API [// Rate limiter (AFTER body parsers)]
 const limiter = rateLimit({
   max: 50,
-  windowMs: 1 * 60 * 100,
+  windowMs: 60 * 60 * 1000, // window milliseconds
   message: 'Too many requests from this IP, please try again in an hour!',
 });
 app.use('/api', limiter);

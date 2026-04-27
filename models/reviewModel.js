@@ -27,6 +27,10 @@ const reviewSchema = new mongoose.Schema(
       required: [true, 'Review must belong to a user'],
     },
   },
+  // This Mongoose schema configuration ensures virtual fields (computed properties) are included when converting documents to plain JavaScript objects or JSON.
+  // By default, Mongoose excludes virtuals from toJSON() and toObject() output for performance. This option includes them automatically.
+  // Virtual fields in Mongoose are computed properties that don't get stored in MongoDB but exist only in your JavaScript objects.
+
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },

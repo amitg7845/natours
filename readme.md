@@ -50,3 +50,11 @@ console.error(err.stack);
 res.status(500).json({ message: 'Internal server error' });
 });
 Key: Programmer = fix code, Operational = user-friendly messages, System = log + monitor.
+
+<!-- While creating REVIEW
+{
+	"rating": 4,
+	"review": "Amazing tours !!!",
+    "tour" : "5c88fa8cf4afda39709c295a",
+    "user" : "69ef3490133266ac14327906"  // mentioned user id which user has created and user shuld be logged In and also mention tour tour ID.
+} -->
